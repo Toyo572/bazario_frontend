@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+/*
+  Tailwind v4: no tailwind.config.js — design tokens are declared here as CSS
+  custom properties, and Tailwind auto-generates the matching utility classes.
+  --color-primary-dark  ->  bg-primary-dark / text-primary-dark / border-primary-dark
+  --font-display         ->  font-display
+  --radius-card           ->  rounded-card
+  --shadow-stall          ->  shadow-stall
+  This naming already matches every className used across the app — nothing
+  in src/features, src/components, or src/layouts needs to change.
+*/
+@theme {
+  --color-ink: #14141f;
+  --color-ink-soft: #3a3a4a;
+
+  --color-paper: #f6f6fa;
+  --color-paper-raised: #ffffff;
+
+  --color-primary: #4f46e5;
+  --color-primary-dark: #4338ca;
+  --color-primary-light: #818cf8;
+  --color-primary-50: #eeedfc;
+
+  --color-accent: #f5a524;
+  --color-accent-dark: #d6870f;
+  --color-accent-light: #fcd9a0;
+
+  --color-success: #14b8a6;
+  --color-success-dark: #0f766e;
+  --color-success-light: #ccfbf1;
+
+  --color-danger: #fb6a69;
+  --color-danger-dark: #dc2626;
+  --color-danger-light: #fee2e2;
+
+  --color-line: #e4e4ec;
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --radius-card: 14px;
+
+  --shadow-stall: 0 1px 2px rgba(20, 20, 31, 0.04), 0 8px 24px -12px rgba(20, 20, 31, 0.12);
+  --shadow-stall-hover: 0 4px 8px rgba(20, 20, 31, 0.06), 0 16px 32px -12px rgba(20, 20, 31, 0.18);
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+  }
+
+  /* Visible keyboard focus everywhere, no exceptions */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Numeric/code data (SKUs, order numbers, prices) always renders in mono —
+     it's system-generated, so it should look like it. */
+  .font-tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/*
+  The "stall" system — Bazario's signature visual device.
+  Every vendor gets a deterministic accent color computed from their id
+  (see src/utils/vendorAccent.js), applied as a top strip on every card
+  that represents them. These are referenced directly via inline style
+  (backgroundColor: 'var(--stall-1)', etc.) rather than as Tailwind
+  utilities, so they stay as plain :root custom properties, not @theme.
+*/
+:root {
+  --stall-1: #4f46e5;
+  --stall-2: #f5a524;
+  --stall-3: #14b8a6;
+  --stall-4: #fb6a69;
+  --stall-5: #8b5cf6;
+  --stall-6: #0ea5e9;
+  --stall-7: #ec4899;
+  --stall-8: #84cc16;
+}
